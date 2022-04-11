@@ -12,7 +12,7 @@ class CreateTopicsTable extends Migration
             $table->id();
             $table->foreignId('sub_class_id');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('code');
             $table->timestamps();
         });

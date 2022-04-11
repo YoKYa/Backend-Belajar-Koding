@@ -16,9 +16,10 @@ class CreateStudyClassesTable extends Migration
         Schema::create('study_classes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('programming_language_id');
+            $table->string('slug');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('picture');
+            $table->string('picture')->nullable();
             $table->timestamps();
         });
     }

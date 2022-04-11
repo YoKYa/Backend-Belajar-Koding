@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class StudyClass extends Model
 {
     use HasFactory;
+    protected $fillable = ['name', 'picture', 'programming_language_id', 'description', 'slug'];
 
     public function language()
     {

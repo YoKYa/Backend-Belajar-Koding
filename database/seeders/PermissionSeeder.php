@@ -18,5 +18,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'change permissions']);
         Permission::create(['name' => 'change assignPermissions']);
         Permission::create(['name' => 'change permissionToUser']);
+        Permission::create(['name' => 'change programmingLanguage']);
+        Permission::create(['name' => 'change quotes']);
+        Permission::create(['name' => 'create user']);
+        Permission::create(['name' => 'edit user']);
+        Permission::create(['name' => 'show users']);
+        Permission::create(['name' => 'change materi']);
     }
 }
