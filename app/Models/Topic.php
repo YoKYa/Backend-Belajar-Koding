@@ -13,4 +13,8 @@ class Topic extends Model
     {
         return $this->belongsTo(SubClass::class);
     }
+    public function pages()
+    {
+        return $this->hasMany(Pages::class);
+    }
 }

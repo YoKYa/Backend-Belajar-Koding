@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\Auth\MeController;
+use App\Http\Controllers\QuestionsController;
 use Illuminate\Support\Facades\{Auth, Route};
 use App\Http\Controllers\Permissions\AsignController;
-use App\Http\Controllers\{ProgrammingLanguageController, UserController, QuotesController, StudyClassController, SubClassController, TopicController};
 use App\Http\Controllers\Permissions\{RoleController, PermissionController};
+use App\Http\Controllers\{LastSeensController, ProgrammingLanguageController, UserController, QuotesController, StudyClassController, StudyRoomsController, SubClassController, TopicController};
 
 
 Route::get('quotes', [QuotesController::class, 'getQuotes']);
@@ -13,6 +15,34 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::post('profile/edit', [UserController::class, 'store']);
      Route::post('profile/picture', [UserController::class, 'picture']);
      
+     // LastSeen
+     Route::post('lastseen', [LastSeensController::class, 'get']);
+     Route::post('addlastseen', [LastSeensController::class, 'add']);
+
+     // Study Room
+     Route::group(['prefix' => 'studyroom'],function () {
+          Route::post('create', [StudyRoomsController::class, 'addSR']);
+          Route::post('delete', [StudyRoomsController::class, 'delSR']);
+          Route::post('check', [StudyRoomsController::class, 'check']);
+          Route::post('/', [StudyRoomsController::class, 'SR']);
+     });
+     // Topic
+     Route::group(['prefix' => 'topics'],function () {     
+          Route::post('/', [TopicController::class, 'get']);
+
+          // Pages
+          Route::post('getPages', [PagesController::class, 'getPages']);
+          Route::post('getQuestions', [QuestionsController::class, 'get']);
+     });
+     Route::group(['prefix' => 'study'],function () {
+          Route::post('getSlug', [StudyClassController::class, 'getSlugStudyClass']);
+          Route::post('studyClass', [StudyClassController::class, 'getStudyClass']);
+
+          Route::get('programingLanguage', [ProgrammingLanguageController::class, 'index']);
+
+          Route::post('getBagian', [SubClassController::class, 'get']);
+     });
+
      Route::group(['prefix' => 'quotes', 'middleware' =>  ['permission:change quotes']],function () {
           Route::post('create', [QuotesController::class, 'create']);
           Route::post('store', [QuotesController::class, 'store']);
@@ -26,6 +56,7 @@ Route::middleware('auth:sanctum')->group(function () {
                Route::post('/', [StudyClassController::class, 'getStudyClass']);
                Route::post('add', [StudyClassController::class, 'addStudyClass']);
                Route::post('get', [StudyClassController::class, 'getItemStudyClass']);
+               
                Route::post('picture', [StudyClassController::class, 'addPicture']);
                Route::post('description', [StudyClassController::class, 'editDes']);
                Route::post('delete', [StudyClassController::class, 'delete']);
@@ -35,6 +66,17 @@ Route::middleware('auth:sanctum')->group(function () {
                Route::post('delBagian', [SubClassController::class, 'delete']);
                // Add Topic
                Route::post('addTopic', [TopicController::class, 'create']);
+               Route::post('delTopic', [TopicController::class, 'delTopic']);
+               // Pages
+               Route::post('addPage', [PagesController::class, 'create']);
+               Route::post('getPages', [PagesController::class, 'get']);
+               Route::post('page',[PagesController::class, 'page']);
+               Route::post('editPage',[PagesController::class, 'edit']);
+               Route::post('deletePage',[PagesController::class, 'delete']);
+               // Question
+               Route::post('addQuestion', [QuestionsController::class, 'create']);
+               Route::post('getQuestions', [QuestionsController::class, 'get']);
+               Route::post('delQuestion', [QuestionsController::class, 'delete']);
           });
           
      });

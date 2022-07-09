@@ -40,6 +40,10 @@ class StudyClassController extends Controller
      {
           return StudyClass::find($request->kelas_id);
      }
+     public function getSlugStudyClass()
+     {
+          return StudyClass::where('slug',request()->slug)->first();
+     }
      public function addPicture(Request $request)
     {
           $picture = $request->file('picture')->store('materi/images/');
